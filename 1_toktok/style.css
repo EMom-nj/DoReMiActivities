@@ -912,6 +912,54 @@ main.main-content {
 }
 
 /* =========================================================
+   DIGITAL PASTE PREVIEW (우산 씌우기)
+   ========================================================= */
+.paste-target-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.drop-target-card {
+  background: #ffffff;
+  border: 2.5px dashed #90cdf4;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.drop-target-card.highlight {
+  border-color: #3182ce;
+  background: #ebf8ff;
+  transform: scale(1.02);
+}
+
+.drop-target-card.completed {
+  border-color: #38a169;
+  border-style: solid;
+  background: #f0fff4;
+}
+
+.target-animal-img {
+  width: auto;
+  max-width: 160px;
+  height: auto;
+  max-height: 140px;
+  object-fit: contain;
+  margin: 10px auto;
+  display: block;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* =========================================================
    MOBILE RESPONSIVE (Option tabs compact, 활동지 maximized!)
    ========================================================= */
 .btn-text-short,
@@ -1062,34 +1110,41 @@ main.main-content {
     gap: 8px;
   }
   .paste-animal-visual img {
-    max-height: 120px;
+    max-height: 80px;
   }
   .paste-cut-piece {
-    min-height: 110px;
-    padding: 6px;
+    min-height: 80px;
+    padding: 4px;
   }
   .paste-cut-piece img.cut-piece-img {
-    max-height: 95px;
+    max-height: 65px;
   }
   .cutout-pieces-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
   .cut-umbrella-card img {
-    max-height: 85px;
+    max-height: 70px;
   }
   .cut-umbrella-card h4 {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
   }
   .line-matching-sheet-layout {
-    gap: 6px;
-    padding: 4px;
+    gap: 4px;
+    padding: 2px;
   }
   .matching-col {
-    width: 95px;
+    width: 65px;
   }
-  .match-item-card-clean img {
-    max-height: 55px;
+  .match-item-row-clean img {
+    max-height: 48px !important;
+    max-width: 48px !important;
+  }
+  .match-dot-node {
+    width: 14px !important;
+    height: 14px !important;
+    margin: 0 4px !important;
+    border-width: 2px !important;
   }
   .silhouette-grid {
     grid-template-columns: 1fr;
@@ -1131,6 +1186,65 @@ main.main-content {
   .game-layout {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  /* Interactive Line Game Mobile Sizing */
+  .interactive-line-game-board {
+    padding: 10px 4px !important;
+    margin-top: 8px !important;
+    overflow: hidden;
+  }
+  .game-columns-container {
+    grid-template-columns: 105px 1fr 105px !important;
+    gap: 4px !important;
+    min-height: 320px !important;
+  }
+  .game-item-card {
+    padding: 6px 4px !important;
+    gap: 4px !important;
+    border-radius: 8px !important;
+    min-height: 48px;
+  }
+  .game-item-card img {
+    height: 32px !important;
+    max-width: 32px !important;
+    object-fit: contain !important;
+  }
+  .game-item-card strong {
+    font-size: 0.8rem !important;
+    white-space: nowrap;
+  }
+
+  /* Digital Umbrella Paste Mobile Sizing */
+  .paste-target-grid {
+    gap: 8px !important;
+  }
+  .drop-target-card {
+    padding: 8px 4px !important;
+    border-radius: 10px !important;
+    min-height: 120px !important;
+  }
+  .drop-target-card > div:first-child {
+    font-size: 0.92rem !important;
+  }
+  .target-animal-img {
+    max-width: 85px !important;
+    max-height: 75px !important;
+    margin: 4px auto !important;
+  }
+  .drop-target-card .slot-instruction {
+    font-size: 0.68rem !important;
+    line-height: 1.25 !important;
+  }
+  .drag-item {
+    padding: 4px 6px !important;
+    gap: 4px !important;
+  }
+  .drag-item img {
+    height: 36px !important;
+  }
+  .drag-item span {
+    font-size: 0.72rem !important;
   }
 }
 

@@ -331,7 +331,14 @@
 
     <!-- 3 Core Navigation Tabs (100% visible at once on mobile) -->
     <nav class="tabs-nav" role="tablist">
-      <button class="portal-tab-btn active" data-target="toktok" id="tabBtnToktok" role="tab" aria-selected="true">
+      <button class="portal-tab-btn active" data-target="lantern" id="tabBtnLantern" role="tab" aria-selected="true">
+        <span class="tab-icon">🏮</span>
+        <span class="tab-name-full">39. 등불이 있으면 무섭지 않아</span>
+        <span class="tab-name-short">39. 등불</span>
+        <span class="tab-num">Cricut</span>
+      </button>
+
+      <button class="portal-tab-btn" data-target="toktok" id="tabBtnToktok" role="tab" aria-selected="false">
         <span class="tab-icon">🌧️</span>
         <span class="tab-name-full">1. 톡톡톡 괜찮아</span>
         <span class="tab-name-short">1. 톡톡톡</span>
@@ -344,18 +351,11 @@
         <span class="tab-name-short">2. 도미노</span>
         <span class="tab-num">15P</span>
       </button>
-
-      <button class="portal-tab-btn" data-target="lantern" id="tabBtnLantern" role="tab" aria-selected="false">
-        <span class="tab-icon">🏮</span>
-        <span class="tab-name-full">39. 등불이 있으면 무섭지 않아</span>
-        <span class="tab-name-short">39. 등불</span>
-        <span class="tab-num">Cricut</span>
-      </button>
     </nav>
 
     <!-- Header Actions -->
     <div class="header-actions">
-      <a id="popoutLink" href="1_toktok/index.html" target="_blank" rel="noopener" class="btn-popout" title="새 창에서 단독 전체화면으로 열기 (인쇄 및 작업용)">
+      <a id="popoutLink" href="39_lantern/index.html" target="_blank" rel="noopener" class="btn-popout" title="새 창에서 단독 전체화면으로 열기 (인쇄 및 작업용)">
         <span>↗️</span>
         <span class="label-text">새 창으로 열기</span>
       </a>
@@ -365,11 +365,20 @@
 
   <!-- Main Viewport containing the 3 Sub-Applications -->
   <main class="app-viewport">
+    <!-- Tab 39: 등불이 있으면 무섭지 않아 (3D Cricut Lantern) - Default First -->
+    <iframe 
+      id="frame-lantern" 
+      src="39_lantern/index.html" 
+      class="tab-iframe active" 
+      title="39. 등불이 있으면 무섭지 않아 독후활동"
+      allow="autoplay; camera; microphone">
+    </iframe>
+
     <!-- Tab 1: 톡톡톡 괜찮아 -->
     <iframe 
       id="frame-toktok" 
       src="1_toktok/index.html" 
-      class="tab-iframe active" 
+      class="tab-iframe" 
       title="1. 톡톡톡 괜찮아 독후활동"
       allow="autoplay; camera; microphone">
     </iframe>
@@ -382,31 +391,22 @@
       title="2. 동물도미노 독후활동"
       allow="autoplay; camera; microphone">
     </iframe>
-
-    <!-- Tab 3: 등불이 있으면 무섭지 않아 (3D Cricut Lantern) -->
-    <iframe 
-      id="frame-lantern" 
-      src="39_lantern/index.html" 
-      class="tab-iframe" 
-      title="39. 등불이 있으면 무섭지 않아 독후활동"
-      allow="autoplay; camera; microphone">
-    </iframe>
   </main>
 
   <!-- Portal Logic -->
   <script>
     const tabButtons = document.querySelectorAll('.portal-tab-btn');
     const iframes = {
+      lantern: document.getElementById('frame-lantern'),
       toktok: document.getElementById('frame-toktok'),
-      domino: document.getElementById('frame-domino'),
-      lantern: document.getElementById('frame-lantern')
+      domino: document.getElementById('frame-domino')
     };
     const popoutLink = document.getElementById('popoutLink');
 
     const urls = {
+      lantern: '39_lantern/index.html',
       toktok: '1_toktok/index.html',
-      domino: '2_domino/index.html',
-      lantern: '39_lantern/index.html'
+      domino: '2_domino/index.html'
     };
 
     function switchTab(targetId) {
@@ -446,13 +446,13 @@
       });
     });
 
-    // Handle initial URL hash on load (e.g. #domino or #lantern)
+    // Handle initial URL hash on load (e.g. #toktok or #domino, default to #lantern)
     function initFromHash() {
       const hash = window.location.hash.replace('#', '').toLowerCase();
       if (hash && iframes[hash]) {
         switchTab(hash);
       } else {
-        switchTab('toktok');
+        switchTab('lantern');
       }
     }
 
