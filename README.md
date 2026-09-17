@@ -19,11 +19,10 @@ Github/
 │   └── assets/              # 동물 & 우산 고해상도 그래픽
 │
 ├── 2_domino/                # 🎲 2. 동물도미노
-│   ├── index.html           # 13마리 동물 실물 크기 3D 도미노 박스 전개도 (A4 15P)
+│   ├── index.html, domino.html   # 13마리 동물 실물 크기 3D 도미노 박스 전개도 (A4 15P)
 │   ├── style.css
 │   ├── script.js
-│   ├── animals_web/         # 웹용 최적화 동물 이미지
-│   └── animals_print/       # 초고해상도 인쇄용 동물 전개도 이미지
+│   └── animals_web/         # 초고화질 동물 전개도 및 웹 최적화 투명 PNG 이미지 (7.7 MB)
 │
 └── 39_lantern/              # 🏮 39. 등불이 있으면 무섭지 않아
     ├── index.html           # 3D 랜턴 조립 시뮬레이터 & 크리컷 도안 다운로더

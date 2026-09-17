@@ -230,23 +230,74 @@
       display: block;
     }
 
-    /* Mobile Responsive */
-    @media (max-width: 900px) {
-      .master-header {
-        height: auto;
-        padding: 10px 12px;
-        flex-direction: column;
-        gap: 8px;
-      }
+    .tab-name-short {
+      display: none;
+    }
+
+    /* Mobile Responsive - All 3 tabs visible without scrolling! */
+    @media (max-width: 768px) {
       :root {
-        --header-h: 110px;
+        --header-h: 78px;
+      }
+      .master-header {
+        height: var(--header-h);
+        padding: 6px 8px;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+      }
+      .brand-section {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .brand-icon {
+        font-size: 1.1rem;
+      }
+      .brand-title {
+        font-size: 0.82rem;
+      }
+      .brand-subtitle {
+        display: none;
+      }
+      .header-actions {
+        position: absolute;
+        top: 6px;
+        right: 8px;
+      }
+      .btn-popout {
+        padding: 4px 8px;
+        font-size: 0.72rem;
+      }
+      .btn-popout span.label-text {
+        display: none;
       }
       .tabs-nav {
         width: 100%;
-        overflow-x: auto;
-        justify-content: flex-start;
+        max-width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 4px;
+        padding: 3px;
+        overflow-x: hidden;
       }
-      .brand-subtitle, .btn-popout span.label-text {
+      .portal-tab-btn {
+        padding: 6px 2px;
+        font-size: 0.76rem;
+        justify-content: center;
+        gap: 4px;
+      }
+      .tab-icon {
+        font-size: 0.95rem;
+      }
+      .tab-name-full {
+        display: none;
+      }
+      .tab-name-short {
+        display: inline;
+        white-space: nowrap;
+        font-weight: 700;
+      }
+      .tab-num {
         display: none;
       }
     }
@@ -259,30 +310,35 @@
     
     <!-- Branding -->
     <div class="brand-section">
-      <div class="brand-icon">🐻</div>
-      <div class="brand-title-group">
-        <h1 class="brand-title">도레미곰 독후활동 스튜디오</h1>
-        <span class="brand-subtitle">엄마표 프리미엄 홈스쿨링 활동지 컬렉션 • Made by EMom-NJ</span>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <div class="brand-icon">🐻</div>
+        <div class="brand-title-group">
+          <h1 class="brand-title">도레미곰 독후활동</h1>
+          <span class="brand-subtitle">엄마표 프리미엄 홈스쿨링 활동지 컬렉션 • Made by EMom-NJ</span>
+        </div>
       </div>
     </div>
 
-    <!-- 3 Core Navigation Tabs -->
+    <!-- 3 Core Navigation Tabs (100% visible at once on mobile) -->
     <nav class="tabs-nav" role="tablist">
       <button class="portal-tab-btn active" data-target="toktok" id="tabBtnToktok" role="tab" aria-selected="true">
         <span class="tab-icon">🌧️</span>
-        <span class="tab-name">1. 톡톡톡 괜찮아</span>
+        <span class="tab-name-full">1. 톡톡톡 괜찮아</span>
+        <span class="tab-name-short">1. 톡톡톡</span>
         <span class="tab-num">8P</span>
       </button>
 
       <button class="portal-tab-btn" data-target="domino" id="tabBtnDomino" role="tab" aria-selected="false">
         <span class="tab-icon">🎲</span>
-        <span class="tab-name">2. 동물도미노</span>
+        <span class="tab-name-full">2. 동물도미노</span>
+        <span class="tab-name-short">2. 도미노</span>
         <span class="tab-num">15P</span>
       </button>
 
       <button class="portal-tab-btn" data-target="lantern" id="tabBtnLantern" role="tab" aria-selected="false">
         <span class="tab-icon">🏮</span>
-        <span class="tab-name">39. 등불이 있으면 무섭지 않아</span>
+        <span class="tab-name-full">39. 등불이 있으면 무섭지 않아</span>
+        <span class="tab-name-short">39. 등불</span>
         <span class="tab-num">Cricut</span>
       </button>
     </nav>
