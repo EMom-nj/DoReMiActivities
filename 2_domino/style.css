@@ -676,15 +676,59 @@ svg.net-svg {
 .domino-sim-container {
   background: linear-gradient(180deg, #E0F2FE 0%, #BAE6FD 100%);
   border-radius: var(--radius-lg);
-  padding: 30px;
+  padding: 24px 20px;
   box-shadow: var(--shadow-md);
   border: 2px solid #7DD3FC;
   text-align: center;
 }
 
+.sim-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+/* Domino View Mode Toggle */
+.sim-view-toggle {
+  display: inline-flex;
+  background: rgba(2, 132, 199, 0.12);
+  border: 1px solid #7dd3fc;
+  padding: 3px;
+  border-radius: 9999px;
+  gap: 4px;
+}
+
+.btn-toggle {
+  border: none;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0369A1;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-toggle:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.btn-toggle.active {
+  background: #0284C7;
+  color: #FFF;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
+}
+
 .sim-track-viewport {
   width: 100%;
-  height: 400px;
+  height: 380px;
   background: #FFF;
   border-radius: var(--radius-md);
   position: relative;
@@ -693,7 +737,15 @@ svg.net-svg {
   box-shadow: inset 0 4px 12px rgba(0,0,0,0.08);
   display: flex;
   align-items: flex-end;
-  padding: 40px 60px 40px;
+  padding: 30px 40px;
+  box-sizing: border-box;
+  transition: height 0.25s ease;
+}
+
+.sim-track-viewport.fit-view {
+  overflow-x: hidden;
+  padding: 16px 10px 24px;
+  justify-content: center;
 }
 
 .sim-track-floor {
@@ -701,18 +753,27 @@ svg.net-svg {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40px;
+  height: 36px;
   background: repeating-linear-gradient(45deg, #E2E8F0, #E2E8F0 10px, #CBD5E1 10px, #CBD5E1 20px);
   border-top: 3px solid #94A3B8;
+  z-index: 1;
+}
+
+.sim-scaler {
+  transform-origin: bottom center;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 24px;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .sim-domino-line {
   display: flex;
   align-items: flex-end;
-  gap: 26px;
+  gap: 22px;
   position: relative;
-  z-index: 2;
-  margin-bottom: 40px;
   min-width: max-content;
 }
 
@@ -722,15 +783,25 @@ svg.net-svg {
   background: #FFF;
   border-radius: 8px;
   border: 2px solid #334155;
-  box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.14);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 3px;
+  padding: 4px 3px;
   cursor: pointer;
   flex-shrink: 0;
   user-select: none;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.domino-item-card img {
+  max-width: 90%;
+  max-height: 58%;
+  object-fit: contain;
+  pointer-events: none;
+  flex-shrink: 1;
 }
 
 .domino-item-card:hover {
@@ -1035,8 +1106,41 @@ svg.net-svg {
   }
 
   /* Domino simulator tab */
+  .domino-sim-container {
+    padding: 16px 10px;
+  }
+  .sim-header-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+  .sim-view-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-toggle {
+    padding: 5px 12px;
+    font-size: 0.76rem;
+  }
   .sim-track-viewport {
-    height: 200px;
+    height: 320px;
+    padding: 16px 10px;
+  }
+  .sim-track-viewport.fit-view {
+    height: 220px;
+    padding: 12px 6px;
+  }
+  .sim-domino-line {
+    gap: 16px;
+  }
+  .sim-controls-bar {
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .sim-controls-bar .btn {
+    padding: 8px 16px !important;
+    font-size: 0.88rem !important;
   }
 
   /* Guide tab */

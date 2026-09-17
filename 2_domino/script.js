@@ -767,7 +767,12 @@ function setupTabs() {
       
       tab.classList.add('active');
       const targetId = tab.getAttribute('data-tab');
-      document.getElementById(targetId).classList.add('active');
+      const targetPane = document.getElementById(targetId);
+      if (targetPane) targetPane.classList.add('active');
+
+      if (targetId === 'tab-game') {
+        setTimeout(updateDominoFitScale, 60);
+      }
     });
   });
 }
@@ -1591,20 +1596,22 @@ function update3DBox() {
 // 도미노 쓰러뜨리기 연쇄 시뮬레이터 (0번 아기 캥거루부터 출발!)
 // =========================================================
 const DOMINO_SIZES = [
-  { id: 0, w: 36,  h: 52,  numFont: 10, nameFont: 9.5, imgRatio: 0.58 }, // 0번 아기 캥거루 (초미니 스타터)
-  { id: 1, w: 44,  h: 70,  numFont: 11, nameFont: 10.5, imgRatio: 0.62 }, // 1번 생쥐 (+18px 큼)
-  { id: 2, w: 52,  h: 90,  numFont: 12, nameFont: 11.5, imgRatio: 0.64 }, // 2번 토끼 (+20px 큼)
-  { id: 3, w: 60,  h: 110, numFont: 13, nameFont: 12.5, imgRatio: 0.65 }, // 3번 너구리 (+20px 큼)
-  { id: 4, w: 68,  h: 128, numFont: 13, nameFont: 13,   imgRatio: 0.66 }, // 4번 코알라 (+18px 큼)
-  { id: 5, w: 76,  h: 146, numFont: 14, nameFont: 13.5, imgRatio: 0.66 }, // 5번 판다 (+18px 큼)
-  { id: 6, w: 84,  h: 164, numFont: 14, nameFont: 14,   imgRatio: 0.67 }, // 6번 물개 (+18px 큼)
-  { id: 7, w: 92,  h: 184, numFont: 15, nameFont: 14.5, imgRatio: 0.67 }, // 7번 캥거루 (+20px 큼)
-  { id: 8, w: 100, h: 204, numFont: 15, nameFont: 15,   imgRatio: 0.68 }, // 8번 얼룩말 (+20px 큼)
-  { id: 9, w: 110, h: 224, numFont: 16, nameFont: 15.5, imgRatio: 0.68 }, // 9번 고릴라 (+20px 큼)
-  { id: 10, w: 120, h: 244, numFont: 16, nameFont: 16,   imgRatio: 0.68 }, // 10번 곰 (+20px 큼)
-  { id: 11, w: 132, h: 264, numFont: 17, nameFont: 16.5, imgRatio: 0.68 }, // 11번 하마 (+20px 큼)
-  { id: 12, w: 152, h: 288, numFont: 18, nameFont: 17,   imgRatio: 0.70 }  // 12번 코끼리 (+24px 큼, 대장 코끼리!)
+  { id: 0, w: 34,  h: 52,  numFont: 10, nameFont: 9,   imgRatio: 0.52 }, // 0번 아기 캥거루 (초미니 스타터)
+  { id: 1, w: 40,  h: 68,  numFont: 11, nameFont: 9.5, imgRatio: 0.54 }, // 1번 생쥐
+  { id: 2, w: 46,  h: 84,  numFont: 11, nameFont: 10,  imgRatio: 0.55 }, // 2번 토끼
+  { id: 3, w: 52,  h: 100, numFont: 12, nameFont: 10.5,imgRatio: 0.56 }, // 3번 너구리
+  { id: 4, w: 58,  h: 116, numFont: 12, nameFont: 11,  imgRatio: 0.56 }, // 4번 코알라
+  { id: 5, w: 64,  h: 132, numFont: 13, nameFont: 11.5,imgRatio: 0.56 }, // 5번 판다
+  { id: 6, w: 70,  h: 148, numFont: 13, nameFont: 12,  imgRatio: 0.56 }, // 6번 물개
+  { id: 7, w: 78,  h: 166, numFont: 14, nameFont: 12.5,imgRatio: 0.56 }, // 7번 캥거루
+  { id: 8, w: 86,  h: 184, numFont: 14, nameFont: 13,  imgRatio: 0.56 }, // 8번 얼룩말
+  { id: 9, w: 96,  h: 202, numFont: 15, nameFont: 13.5,imgRatio: 0.56 }, // 9번 고릴라
+  { id: 10, w: 108,h: 222, numFont: 15, nameFont: 14,  imgRatio: 0.56 }, // 10번 곰
+  { id: 11, w: 120,h: 242, numFont: 16, nameFont: 14.5,imgRatio: 0.56 }, // 11번 하마
+  { id: 12, w: 136,h: 265, numFont: 17, nameFont: 15,  imgRatio: 0.58 }  // 12번 코끼리 (대장 코끼리)
 ];
+
+let isFitViewMode = true; // Default to Fit Mode on phones/all viewports
 
 function setupDominoSimulator() {
   const track = document.getElementById('sim-domino-line');
@@ -1617,20 +1624,20 @@ function setupDominoSimulator() {
     card.className = 'domino-item-card';
     
     const sizeInfo = DOMINO_SIZES[index] || {
-      w: Math.max(36, animal.w * 1.5),
-      h: Math.max(52, animal.h * 2.4),
+      w: Math.max(34, animal.w * 1.4),
+      h: Math.max(52, animal.h * 2.3),
       numFont: 12,
       nameFont: 11,
-      imgRatio: 0.65
+      imgRatio: 0.56
     };
 
     card.style.height = `${sizeInfo.h}px`;
     card.style.width = `${sizeInfo.w}px`;
     card.title = `${animal.order}번 ${animal.korean} (클릭하면 여기서부터 쓰러져요!)`;
     card.innerHTML = `
-      <div style="font-family: 'Jua', sans-serif; font-size: ${sizeInfo.numFont}px; color: #EA580C; font-weight: 800; line-height: 1;">${animal.order}</div>
-      <img src="animals_web/${animal.file}" style="max-height: ${Math.round(sizeInfo.h * sizeInfo.imgRatio)}px; max-width: 90%; object-fit: contain; pointer-events: none;" alt="${animal.korean}" />
-      <div style="font-family: 'Jua', sans-serif; font-size: ${sizeInfo.nameFont}px; color: #1E293B; line-height: 1; white-space: nowrap;">${animal.korean}</div>
+      <div style="font-family: 'Jua', sans-serif; font-size: ${sizeInfo.numFont}px; color: #EA580C; font-weight: 800; line-height: 1; margin-top: 2px;">${animal.order}</div>
+      <img src="animals_web/${animal.file}" style="max-height: ${Math.round(sizeInfo.h * sizeInfo.imgRatio)}px; max-width: 88%; object-fit: contain; pointer-events: none; flex-shrink: 1;" alt="${animal.korean}" />
+      <div style="font-family: 'Jua', sans-serif; font-size: ${sizeInfo.nameFont}px; color: #1E293B; line-height: 1; white-space: nowrap; margin-bottom: 2px;">${animal.korean}</div>
     `;
 
     card.addEventListener('click', () => triggerDominoChain(animal.id));
@@ -1647,22 +1654,100 @@ function setupDominoSimulator() {
   if (resetBtn) {
     resetBtn.addEventListener('click', resetDominoChain);
   }
+
+  // View toggle handlers
+  const btnFit = document.getElementById('btn-view-fit');
+  const btnScroll = document.getElementById('btn-view-scroll');
+
+  if (btnFit) {
+    btnFit.addEventListener('click', () => setDominoViewMode(true));
+  }
+  if (btnScroll) {
+    btnScroll.addEventListener('click', () => setDominoViewMode(false));
+  }
+
+  window.addEventListener('resize', updateDominoFitScale);
+  window.addEventListener('orientationchange', updateDominoFitScale);
+
+  // Initial setup: Default to fit view on small/medium screens, or when viewport is compact
+  setDominoViewMode(true);
+}
+
+function setDominoViewMode(fit) {
+  isFitViewMode = fit;
+  const btnFit = document.getElementById('btn-view-fit');
+  const btnScroll = document.getElementById('btn-view-scroll');
+  const viewport = document.getElementById('sim-track-viewport');
+  
+  if (btnFit && btnScroll) {
+    btnFit.classList.toggle('active', isFitViewMode);
+    btnScroll.classList.toggle('active', !isFitViewMode);
+  }
+  
+  if (viewport) {
+    viewport.classList.toggle('fit-view', isFitViewMode);
+  }
+  
+  updateDominoFitScale();
+}
+
+function updateDominoFitScale() {
+  const viewport = document.getElementById('sim-track-viewport');
+  const scaler = document.getElementById('sim-scaler');
+  const track = document.getElementById('sim-domino-line');
+  if (!viewport || !scaler || !track) return;
+
+  if (isFitViewMode) {
+    viewport.classList.add('fit-view');
+    const vpWidth = viewport.clientWidth;
+    if (vpWidth <= 0) return;
+
+    // Natural width of all 13 dominos + spacing
+    const naturalWidth = track.scrollWidth || 1200;
+    const naturalHeight = 265; // height of elephant domino
+    
+    // Scale so that 13 cards fit inside viewport with safe margins
+    const availableWidth = Math.max(300, vpWidth - 28);
+    const scale = Math.min(1.0, availableWidth / (naturalWidth + 40));
+    
+    scaler.style.transform = `scale(${scale})`;
+    scaler.style.transformOrigin = 'bottom center';
+    scaler.style.width = `${naturalWidth}px`;
+    
+    const scaledH = Math.round(naturalHeight * scale) + 65;
+    viewport.style.height = `${Math.max(170, scaledH)}px`;
+  } else {
+    viewport.classList.remove('fit-view');
+    scaler.style.transform = 'none';
+    scaler.style.transformOrigin = 'bottom left';
+    scaler.style.width = 'auto';
+    viewport.style.height = '360px';
+  }
 }
 
 function triggerDominoChain(startId = 0) {
   const cards = document.querySelectorAll('.domino-item-card');
   const startIndex = ANIMALS.findIndex(a => a.id === startId);
+  const viewport = document.getElementById('sim-track-viewport');
   
   for (let i = startIndex; i < ANIMALS.length; i++) {
     setTimeout(() => {
       if (cards[i]) {
         cards[i].classList.add('toppled');
         playDominoSound();
+
+        // If in scroll mode, smoothly follow the active toppling domino
+        if (!isFitViewMode && viewport) {
+          const cardLeft = cards[i].offsetLeft;
+          const cardWidth = cards[i].offsetWidth;
+          const targetScroll = cardLeft - (viewport.clientWidth / 2) + (cardWidth / 2);
+          viewport.scrollTo({ left: targetScroll, behavior: 'smooth' });
+        }
       }
       if (i === ANIMALS.length - 1) {
         showDominoSuccess();
       }
-    }, (i - startIndex + 1) * 150);
+    }, (i - startIndex + 1) * 140);
   }
 }
 

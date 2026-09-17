@@ -291,16 +291,31 @@
     <!-- 탭 4: 도미노 쓰러뜨리기 시뮬레이터 -->
     <section id="tab-game" class="tab-pane">
       <div class="domino-sim-container">
-        <h2 style="font-family: 'Jua', sans-serif; font-size: 26px; color: #0369A1; margin-bottom: 8px;">
-          ⚡ 동물도미노 연쇄 쓰러뜨리기!
-        </h2>
-        <p style="font-size: 14px; color: #0284C7; margin-bottom: 24px;">
-          엄마 주머니에서 쏙 나온 0번 아기 캥거루부터 12번 코끼리까지 크기 순서대로 서 있어요! 아기 캥거루를 톡 건드려 보세요!
-        </p>
+        <div class="sim-header-row">
+          <div>
+            <h2 style="font-family: 'Jua', sans-serif; font-size: 24px; color: #0369A1; margin-bottom: 4px;">
+              ⚡ 동물도미노 연쇄 쓰러뜨리기!
+            </h2>
+            <p style="font-size: 13px; color: #0284C7; margin-bottom: 8px;">
+              엄마 주머니에서 쏙 나온 0번 아기 캥거루부터 12번 코끼리까지! 아기 캥거루를 톡 밀어보세요!
+            </p>
+          </div>
+          <!-- View Mode Toggle: Fit to Screen vs Full Scale Scroll -->
+          <div class="sim-view-toggle">
+            <button id="btn-view-fit" class="btn-toggle active" title="13마리 전체를 화면에 맞춰 한눈에 쓰러지는 모습을 감상합니다">
+              📱 한눈에 다 보기 (화면 맞춤)
+            </button>
+            <button id="btn-view-scroll" class="btn-toggle" title="원래 큰 크기로 보면서 좌우로 스크롤합니다">
+              🔍 크게 보기 (스크롤)
+            </button>
+          </div>
+        </div>
 
-        <div class="sim-track-viewport">
+        <div class="sim-track-viewport fit-view" id="sim-track-viewport">
           <div class="sim-track-floor"></div>
-          <div class="sim-domino-line" id="sim-domino-line"></div>
+          <div class="sim-scaler" id="sim-scaler">
+            <div class="sim-domino-line" id="sim-domino-line"></div>
+          </div>
         </div>
 
         <div id="domino-success-banner" style="display: none; margin-top: 20px; padding: 16px; background: #DCFCE7; border: 2px solid #22C55E; border-radius: 12px;">
