@@ -709,6 +709,83 @@
       color: var(--text-sub);
       font-size: 0.85rem;
     }
+
+    /* Mobile Responsive for 39_lantern */
+    @media (max-width: 768px) {
+      header {
+        padding: 10px 8px 4px;
+      }
+      header h1 {
+        font-size: 1.25rem;
+        margin: 2px 0;
+      }
+      .badge-book {
+        padding: 2px 8px;
+        font-size: 0.72rem;
+        margin-bottom: 0.3rem;
+      }
+      .subtitle, .name-tag-callout {
+        display: none;
+      }
+      .container {
+        padding: 0 8px 1.5rem;
+      }
+      .showcase-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 1.2rem;
+      }
+      .viewer-card {
+        padding: 8px;
+        min-height: 290px !important;
+      }
+      .viewer-controls {
+        top: 8px;
+        right: 8px;
+        gap: 4px;
+      }
+      .hint-rotate {
+        bottom: 8px;
+        font-size: 0.72rem;
+      }
+      .scene {
+        width: 220px;
+        height: 250px;
+        transform: scale(0.82);
+        -webkit-transform: scale(0.82);
+      }
+      .btn-ctrl {
+        padding: 5px 9px;
+        font-size: 0.72rem;
+      }
+      .tab-bar {
+        gap: 4px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+      .tab-btn {
+        padding: 5px 8px;
+        font-size: 0.72rem;
+      }
+      .svg-viewer-container {
+        min-height: 200px;
+        padding: 8px;
+      }
+      .guide-section, .panels-section, .preview-section {
+        padding: 14px 10px;
+        margin-bottom: 1.2rem;
+      }
+      .info-card {
+        padding: 14px 10px;
+      }
+      .download-grid {
+        gap: 8px;
+      }
+      .btn-download {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -734,10 +811,10 @@
       <div class="viewer-card">
         <div class="viewer-controls">
           <button id="toggleLightBtn" class="btn-ctrl active">
-            💡 등불 켜기 (ON)
+            💡 등불 (ON)
           </button>
-          <button id="autoRotateBtn" class="btn-ctrl">
-            🔄 자동 회전
+          <button id="autoRotateBtn" class="btn-ctrl active">
+            🔄 자동 회전 (ON)
           </button>
         </div>
 
@@ -1041,7 +1118,7 @@
     let startY = 0;
     let currentRotY = 25;
     let currentRotX = -12;
-    let autoRotate = false;
+    let autoRotate = true;
     let animFrame;
 
     // Mouse drag rotation
@@ -1141,6 +1218,9 @@
       }
       animFrame = requestAnimationFrame(animateRotation);
     }
+
+    // Launch auto-rotation immediately on page load
+    animateRotation();
 
     // Tab switching for 2D previews
     const tabs = document.querySelectorAll('.tab-btn');
