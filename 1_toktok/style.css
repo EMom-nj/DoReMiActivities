@@ -914,42 +914,77 @@ main.main-content {
 /* =========================================================
    MOBILE RESPONSIVE (Option tabs compact, 활동지 maximized!)
    ========================================================= */
-.btn-text-short {
+.btn-text-short,
+.mobile-action-bar {
   display: none;
 }
 
 @media (max-width: 768px) {
+  /* Hide the massive desktop header on mobile completely */
   header.app-header {
-    position: relative;
-    padding: 6px 10px;
-    box-shadow: none;
-    border-bottom: 1px solid #e2e8f0;
+    display: none !important;
   }
-  .brand-title {
-    font-size: 1.15rem;
-  }
-  .brand-badge, .brand-title span.author-tag, .rain-control-group {
-    display: none;
-  }
-  .header-actions {
-    gap: 6px;
-  }
-  .header-actions .btn {
-    padding: 5px 10px;
-    font-size: 0.78rem;
-  }
+
   .nav-tabs-wrapper {
     position: sticky;
     top: 0;
     z-index: 100;
+    background: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
+
+  .mobile-action-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 8px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-bottom: 1px solid #bae6fd;
+    gap: 8px;
+  }
+
+  .btn-m-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-m-print {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
+    flex: 1;
+    justify-content: center;
+  }
+
+  .btn-m-audio {
+    background: #fff;
+    color: #0284c7;
+    border: 1.5px solid #7dd3fc;
+    padding: 5px 12px;
+  }
+
+  .btn-m-audio.active {
+    background: #0284c7;
+    color: #fff;
+  }
+
   .nav-tabs {
-    padding: 4px 6px;
+    padding: 3px 4px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 3px;
+    background: #fff;
   }
+
   .tab-btn {
     padding: 6px 2px;
     font-size: 0.74rem;
@@ -957,20 +992,20 @@ main.main-content {
     text-align: center;
     justify-content: center;
   }
+
   .btn-text-full {
     display: none;
   }
+
   .btn-text-short {
     display: inline;
   }
-  .hero-banner {
-    display: none; /* Frees up ~120px on mobile so 활동지 is seen immediately! */
-  }
+
+  .hero-banner,
   .print-controls-bar {
-    padding: 6px 8px;
-    gap: 6px;
-    margin-bottom: 12px;
+    display: none !important; /* Hide on mobile so 활동지 is seen immediately! */
   }
+
   .print-presets,
   .print-scale-selector,
   .paper-size-notice {

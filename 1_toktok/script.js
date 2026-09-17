@@ -222,18 +222,32 @@ function initAudioSystem() {
         audioCtx.resume();
       }
 
+      const mobileAudioBtn = document.getElementById('mobileAudioBtn');
+      const mobileAudioIcon = document.getElementById('mobileAudioIcon');
+      const mobileAudioText = document.getElementById('mobileAudioText');
+
       if (!isRainAudioPlaying) {
         startRainAmbient();
         isRainAudioPlaying = true;
         toggleBtn.classList.add('playing');
         iconSpan.textContent = '🔊';
         textSpan.textContent = '빗소리 끄기';
+        if (mobileAudioBtn) {
+          mobileAudioBtn.classList.add('active');
+          if (mobileAudioIcon) mobileAudioIcon.textContent = '🔊';
+          if (mobileAudioText) mobileAudioText.textContent = '끄기';
+        }
       } else {
         stopRainAmbient();
         isRainAudioPlaying = false;
         toggleBtn.classList.remove('playing');
         iconSpan.textContent = '🌧️';
         textSpan.textContent = '빗소리 켜기';
+        if (mobileAudioBtn) {
+          mobileAudioBtn.classList.remove('active');
+          if (mobileAudioIcon) mobileAudioIcon.textContent = '🌧️';
+          if (mobileAudioText) mobileAudioText.textContent = '빗소리';
+        }
       }
     });
   }

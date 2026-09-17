@@ -703,6 +703,69 @@
       max-height: 500px;
     }
 
+    /* Sub-tabs below 3D Lantern (Cuts down endless scrolling) */
+    .lantern-tabs-container {
+      margin-top: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .l-sub-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 0 auto 1.5rem;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      padding: 6px;
+      border-radius: 16px;
+      border: 1px solid var(--border-line);
+      max-width: 960px;
+    }
+
+    .l-nav-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      padding: 11px 12px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      transition: all 0.22s ease;
+      white-space: nowrap;
+    }
+
+    .l-nav-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .l-nav-tab.active {
+      background: var(--accent);
+      color: #0b111e;
+      font-weight: 800;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+    }
+
+    .l-content-panel {
+      display: none;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .l-content-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     footer {
       text-align: center;
       padding: 3rem 1rem 2rem;
@@ -713,7 +776,7 @@
     /* Mobile Responsive for 39_lantern */
     @media (max-width: 768px) {
       header {
-        padding: 10px 8px 4px;
+        padding: 8px 8px 4px;
       }
       header h1 {
         font-size: 1.25rem;
@@ -730,14 +793,10 @@
       .container {
         padding: 0 8px 1.5rem;
       }
-      .showcase-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-        margin-bottom: 1.2rem;
-      }
       .viewer-card {
         padding: 8px;
         min-height: 290px !important;
+        margin-bottom: 0.8rem;
       }
       .viewer-controls {
         top: 8px;
@@ -757,6 +816,27 @@
       .btn-ctrl {
         padding: 5px 9px;
         font-size: 0.72rem;
+      }
+      .lantern-tabs-container {
+        margin-top: 0.6rem;
+      }
+      .l-sub-nav {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3px;
+        padding: 4px;
+        border-radius: 12px;
+        margin-bottom: 0.8rem;
+      }
+      .l-nav-tab {
+        padding: 7px 2px;
+        font-size: 0.72rem;
+        flex-direction: column;
+        gap: 2px;
+        border-radius: 8px;
+        text-align: center;
+      }
+      .l-nav-tab .tab-icon {
+        font-size: 1rem;
       }
       .tab-bar {
         gap: 4px;
@@ -804,25 +884,22 @@
 
   <div class="container">
 
-    <!-- 3D SHOWCASE & DOWNLOADS -->
-    <div class="showcase-grid">
-      
-      <!-- Left: Interactive 3D Lantern Viewer -->
-      <div class="viewer-card">
-        <div class="viewer-controls">
-          <button id="toggleLightBtn" class="btn-ctrl active">
-            💡 등불 (ON)
-          </button>
-          <button id="autoRotateBtn" class="btn-ctrl active">
-            🔄 자동 회전 (ON)
-          </button>
-        </div>
+    <!-- 1. Interactive 3D Lantern Viewer (Centered Hero) -->
+    <div class="viewer-card">
+      <div class="viewer-controls">
+        <button id="toggleLightBtn" class="btn-ctrl active">
+          💡 등불 (ON)
+        </button>
+        <button id="autoRotateBtn" class="btn-ctrl active">
+          🔄 자동 회전 (ON)
+        </button>
+      </div>
 
-        <div class="scene lit" id="sceneContainer">
-          <!-- Ambient candle light behind 3D lantern (Safe from 3D flattening) -->
-          <div class="scene-glow"></div>
+      <div class="scene lit" id="sceneContainer">
+        <!-- Ambient candle light behind 3D lantern (Safe from 3D flattening) -->
+        <div class="scene-glow"></div>
 
-          <div class="lantern-3d" id="lantern3d">
+        <div class="lantern-3d" id="lantern3d">
             
             <!-- Top Handle -->
             <div class="lantern-handle"></div>
@@ -912,192 +989,216 @@
         </div>
 
         <div class="hint-rotate">
-          <span>🖱️ 마우스 드래그로 360도 랜턴을 돌려보세요</span>
+          <span>🖱️ 마우스나 손가락으로 드래그하여 360도 랜턴을 돌려보세요</span>
         </div>
       </div>
 
-      <!-- Right: Info & Direct SVG Downloads -->
-      <div class="info-card">
-        <div>
-          <div class="section-title">
-            <span></span>
-            Ellie의 3D 등불 만들기 세트
-          </div>
+      <!-- 2. TABBED CONTENT AREA (No endless scrolling!) -->
+      <div class="lantern-tabs-container">
+        <nav class="l-sub-nav">
+          <button class="l-nav-tab active" data-target="panel-download">
+            <span class="tab-icon">📥</span> <span>SVG 다운로드</span>
+          </button>
+          <button class="l-nav-tab" data-target="panel-preview">
+            <span class="tab-icon">✂️</span> <span>2D 도안 보기</span>
+          </button>
+          <button class="l-nav-tab" data-target="panel-story">
+            <span class="tab-icon">🐻</span> <span>4면 이야기</span>
+          </button>
+          <button class="l-nav-tab" data-target="panel-guide">
+            <span class="tab-icon">📖</span> <span>제작 가이드</span>
+          </button>
+        </nav>
 
-          <ul class="features-list">
-            <li class="feature-item">
-              <div class="feature-icon">✨</div>
-              <div class="feature-text">
-                <h4>모든 면 하단 'Ellie' 이름 각인</h4>
-                <p>소문자 'e'의 안쪽 종이가 떨어지지 않도록 스텐실 브릿지(Stencil Bridge) 처리되어 깔끔하게 잘립니다.</p>
+        <!-- Panel 1: Direct SVG Downloads & Features (Default Active) -->
+        <div id="panel-download" class="l-content-panel active">
+          <div class="info-card">
+            <div>
+              <div class="section-title">
+                <span></span>
+                Ellie의 3D 등불 만들기 세트
               </div>
-            </li>
-            <li class="feature-item">
-              <div class="feature-icon">🐻</div>
-              <div class="feature-text">
-                <h4>동화 스토리 4면 실루엣 컷아웃</h4>
-                <p>① 등불을 든 아기곰 ② 아기돼지와 부엉이 ③ 숲속 오두막과 달님 ④ 토끼와 다람쥐</p>
+
+              <ul class="features-list">
+                <li class="feature-item">
+                  <div class="feature-icon">✨</div>
+                  <div class="feature-text">
+                    <h4>모든 면 하단 'Ellie' 이름 각인</h4>
+                    <p>소문자 'e'의 안쪽 종이가 떨어지지 않도록 스텐실 브릿지(Stencil Bridge) 처리되어 깔끔하게 잘립니다.</p>
+                  </div>
+                </li>
+                <li class="feature-item">
+                  <div class="feature-icon">🐻</div>
+                  <div class="feature-text">
+                    <h4>동화 스토리 4면 실루엣 컷아웃</h4>
+                    <p>① 등불을 든 아기곰 ② 아기돼지와 부엉이 ③ 숲속 오두막과 달님 ④ 토끼와 다람쥐</p>
+                  </div>
+                </li>
+                <li class="feature-item">
+                  <div class="feature-icon">🕯️</div>
+                  <div class="feature-text">
+                    <h4>LED 티라이트 안전 거치 바닥</h4>
+                    <p>표준 LED 캔들(지름 38mm)이 쏙 들어가 바닥 스위치를 언제든 켜고 끌 수 있는 기능형 베이스.</p>
+                  </div>
+                </li>
+                <li class="feature-item">
+                  <div class="feature-icon">📐</div>
+                  <div class="feature-text">
+                    <h4>Cricut Score(접는선) 레이어 완벽 분리</h4>
+                    <p>빨간 점선은 Score 휠/스타일러스로, 검정 실선은 Basic Cut으로 원클릭 세팅 가능!</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Download Buttons -->
+            <div>
+              <div style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 8px;">
+                📥 크리컷 SVG 파일 즉시 열기 / 다운로드
               </div>
-            </li>
-            <li class="feature-item">
-              <div class="feature-icon">🕯️</div>
-              <div class="feature-text">
-                <h4>LED 티라이트 안전 거치 바닥</h4>
-                <p>표준 LED 캔들(지름 38mm)이 쏙 들어가 바닥 스위치를 언제든 켜고 끌 수 있는 기능형 베이스.</p>
+              <div class="download-grid">
+                <a href="cricut_lantern_12x12_all_in_one.svg" download class="btn-download">
+                  <div>⭐ 12x12 올인원 SVG</div>
+                  <span class="btn-sub">12x12 매트 1장에 전체 부품 컷팅</span>
+                </a>
+                <a href="cricut_lantern_roof_and_base.svg" download class="btn-download btn-secondary">
+                  <div>🏛️ 지붕 & 바닥판 SVG</div>
+                  <span class="btn-sub">피라미드 지붕 + 티라이트 베이스</span>
+                </a>
+                <a href="cricut_lantern_letter_part1.svg" download class="btn-download btn-secondary">
+                  <div>📄 레터/A4 분할 Part 1</div>
+                  <span class="btn-sub">아기곰 & 돼지 (일반 복사지 크기)</span>
+                </a>
+                <a href="cricut_lantern_letter_part2.svg" download class="btn-download btn-secondary">
+                  <div>📄 레터/A4 분할 Part 2</div>
+                  <span class="btn-sub">오두막 & 토끼 (일반 복사지 크기)</span>
+                </a>
               </div>
-            </li>
-            <li class="feature-item">
-              <div class="feature-icon">📐</div>
-              <div class="feature-text">
-                <h4>Cricut Score(접는선) 레이어 완벽 분리</h4>
-                <p>빨간 점선은 Score 휠/스타일러스로, 검정 실선은 Basic Cut으로 원클릭 세팅 가능!</p>
+              <div style="margin-top: 10px;">
+                <a href="cricut_lantern_vellum_inserts.svg" download class="btn-download btn-secondary" style="width: 100%;">
+                  <div>📜 반투명 트레이싱지(Vellum) 창문 4장 SVG</div>
+                  <span class="btn-sub">등불 내부에 붙여 은은한 불빛을 확산시키는 유산지 템플릿</span>
+                </a>
               </div>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Download Buttons -->
-        <div>
-          <div style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 8px;">
-            📥 크리컷 SVG 파일 즉시 열기 / 다운로드
-          </div>
-          <div class="download-grid">
-            <a href="cricut_lantern_12x12_all_in_one.svg" download class="btn-download">
-              <div>⭐ 12x12 올인원 SVG</div>
-              <span class="btn-sub">12x12 매트 1장에 전체 부품 컷팅</span>
-            </a>
-            <a href="cricut_lantern_roof_and_base.svg" download class="btn-download btn-secondary">
-              <div>🏛️ 지붕 & 바닥판 SVG</div>
-              <span class="btn-sub">피라미드 지붕 + 티라이트 베이스</span>
-            </a>
-            <a href="cricut_lantern_letter_part1.svg" download class="btn-download btn-secondary">
-              <div>📄 레터/A4 분할 Part 1</div>
-              <span class="btn-sub">아기곰 & 돼지 (일반 복사지 크기)</span>
-            </a>
-            <a href="cricut_lantern_letter_part2.svg" download class="btn-download btn-secondary">
-              <div>📄 레터/A4 분할 Part 2</div>
-              <span class="btn-sub">오두막 & 토끼 (일반 복사지 크기)</span>
-            </a>
-          </div>
-          <div style="margin-top: 10px;">
-            <a href="cricut_lantern_vellum_inserts.svg" download class="btn-download btn-secondary" style="width: 100%;">
-              <div>📜 반투명 트레이싱지(Vellum) 창문 4장 SVG</div>
-              <span class="btn-sub">등불 내부에 붙여 은은한 불빛을 확산시키는 유산지 템플릿</span>
-            </a>
+            </div>
           </div>
         </div>
 
-      </div>
+        <!-- Panel 2: 2D SVG Cutout Preview -->
+        <div id="panel-preview" class="l-content-panel">
+          <div class="preview-section">
+            <div class="section-title">
+              <span></span>
+              실제 2D 커팅 도안 미리보기
+            </div>
+            
+            <div class="tab-bar">
+              <button class="tab-btn active" data-file="cricut_lantern_12x12_all_in_one.svg">⭐ 12x12 올인원 도안</button>
+              <button class="tab-btn" data-file="cricut_lantern_roof_and_base.svg">🏛️ 지붕 & 바닥판</button>
+              <button class="tab-btn" data-file="cricut_lantern_letter_part1.svg">📄 레터 분할 Part 1</button>
+              <button class="tab-btn" data-file="cricut_lantern_letter_part2.svg">📄 레터 분할 Part 2</button>
+              <button class="tab-btn" data-file="cricut_lantern_vellum_inserts.svg">📜 반투명 창문 패널</button>
+            </div>
 
-    </div>
-
-    <!-- CRICUT DESIGN SPACE 5-STEP GUIDE -->
-    <div class="guide-section">
-      <div class="cricut-badge">✂️ Cricut Design Space 가이드</div>
-      <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">초보자도 5분 만에 성공하는 크리컷 컷팅법</h2>
-      <p style="color: var(--text-sub); font-size: 0.95rem;">
-        Cricut 기계(Maker, Explore, Joy Xtra 등)에서 완벽하게 잘라내기 위한 필수 팁입니다.
-      </p>
-
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-num">1</div>
-          <h4>SVG 파일 업로드</h4>
-          <p>Design Space 좌측 <strong>Upload</strong> 버튼을 눌러 다운로드한 SVG 파일을 캔버스에 추가합니다.</p>
-        </div>
-
-        <div class="step-card">
-          <div class="step-num">2</div>
-          <h4>그룹 해제 (Ungroup)</h4>
-          <p>캔버스에 올린 도안을 선택한 후 우측 레이어 패널 상단의 <strong>Ungroup</strong>을 클릭하여 레이어를 분리합니다.</p>
-        </div>
-
-        <div class="step-card">
-          <div class="step-num">3</div>
-          <h4>Score(접는선) 변경</h4>
-          <p>빨간색 점선으로 된 <strong>SCORE-LINES</strong> 레이어를 선택하고, 상단 Operation을 <strong>Basic Cut ➜ Score</strong>로 변경합니다.</p>
-          <div class="highlight-box">
-            💡 스코어링 휠 또는 스코어링 스타일러스 도구를 준비해주세요!
+            <div class="svg-viewer-container" id="svgPreviewBox">
+              <img id="previewImg" src="cricut_lantern_12x12_all_in_one.svg" alt="SVG Preview" />
+            </div>
           </div>
         </div>
 
-        <div class="step-card">
-          <div class="step-num">4</div>
-          <h4>전체 선택 후 Attach (붙이기)</h4>
-          <p>전체 레이어를 마우스로 드래그하여 선택한 뒤, 우측 하단의 <strong>Attach</strong> 버튼을 반드시 눌러줍니다.</p>
-          <div class="highlight-box">
-            ⚠️ Attach를 안 누르면 자르는 선과 접는 선이 매트에서 제각각 분리됩니다!
+        <!-- Panel 3: 4 Panels Story Cutout Details -->
+        <div id="panel-story" class="l-content-panel">
+          <div class="panels-section">
+            <div class="section-title">
+              <span></span>
+              랜턴 4개 면 구성 안내 (양 끝 고정 + 중간 2면 자유 디자인)
+            </div>
+            <p style="color: var(--text-sub); font-size: 0.95rem; margin-bottom: 1rem;">
+              원하시는 대로 양 끝의 메인 디자인(Ellie & 오두막)은 그대로 두고, 중간 2면은 직접 크리컷/드로잉으로 꾸미실 수 있도록 빈 캔버스로 구성했습니다!
+            </p>
+
+            <div class="panels-grid">
+              <div class="story-card">
+                <div class="story-card-icon">👑✨</div>
+                <h4>1면: ✦ Ellie ✦ 메인 네임</h4>
+                <p>화려한 별빛 보태니컬 아치 창문과 중앙 'Ellie' 네임 각인 (안쪽 종이가 안 떨어지는 스텐실 브릿지 안심 설계)</p>
+                <span class="ellie-badge">유지: ✦ Ellie ✦</span>
+              </div>
+
+              <div class="story-card" style="border: 1px dashed var(--accent);">
+                <div class="story-card-icon">🔲✂️</div>
+                <h4>2면: 오픈 윈도우 박스 ①</h4>
+                <p>양 끝면과 정확히 동일한 크기(43×73mm)와 아치 형태의 윈도우 박스가 깔끔하게 컷아웃된 면입니다. 원하는 디자인을 채워 넣을 수 있습니다.</p>
+                <span class="ellie-badge" style="background: rgba(74, 222, 128, 0.15); color: #4ade80;">윈도우 박스 컷아웃</span>
+              </div>
+
+              <div class="story-card" style="border: 1px dashed var(--accent);">
+                <div class="story-card-icon">🔲🎨</div>
+                <h4>3면: 오픈 윈도우 박스 ②</h4>
+                <p>양 끝면과 정확히 동일한 크기와 아치 형태의 윈도우 박스가 깔끔하게 컷아웃된 면입니다. 반투명 트레이싱지를 대거나 실루엣을 배치해보세요.</p>
+                <span class="ellie-badge" style="background: rgba(74, 222, 128, 0.15); color: #4ade80;">윈도우 박스 컷아웃</span>
+              </div>
+
+              <div class="story-card">
+                <div class="story-card-icon">🏡🌲</div>
+                <h4>4면: 숲속 아늑한 오두막</h4>
+                <p>마음에 들어 하신 따뜻한 불빛의 4칸 창문과 문, 침엽수림 실루엣 디자인 그대로 유지되었습니다.</p>
+                <span class="ellie-badge">유지: ✦ Cozy Cabin ✦</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="step-card">
-          <div class="step-num">5</div>
-          <h4>Make It & 조립 시작!</h4>
-          <p><strong>Make It</strong>을 누르고 카드스톡 재질(65lb~80lb Medium Cardstock 권장)을 선택하여 커팅을 진행합니다.</p>
+        <!-- Panel 4: Cricut Design Space 5-Step Guide -->
+        <div id="panel-guide" class="l-content-panel">
+          <div class="guide-section">
+            <div class="cricut-badge">✂️ Cricut Design Space 가이드</div>
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">초보자도 5분 만에 성공하는 크리컷 컷팅법</h2>
+            <p style="color: var(--text-sub); font-size: 0.95rem;">
+              Cricut 기계(Maker, Explore, Joy Xtra 등)에서 완벽하게 잘라내기 위한 필수 팁입니다.
+            </p>
+
+            <div class="steps-grid">
+              <div class="step-card">
+                <div class="step-num">1</div>
+                <h4>SVG 파일 업로드</h4>
+                <p>Design Space 좌측 <strong>Upload</strong> 버튼을 눌러 다운로드한 SVG 파일을 캔버스에 추가합니다.</p>
+              </div>
+
+              <div class="step-card">
+                <div class="step-num">2</div>
+                <h4>그룹 해제 (Ungroup)</h4>
+                <p>캔버스에 올린 도안을 선택한 후 우측 레이어 패널 상단의 <strong>Ungroup</strong>을 클릭하여 레이어를 분리합니다.</p>
+              </div>
+
+              <div class="step-card">
+                <div class="step-num">3</div>
+                <h4>Score(접는선) 변경</h4>
+                <p>빨간색 점선으로 된 <strong>SCORE-LINES</strong> 레이어를 선택하고, 상단 Operation을 <strong>Basic Cut ➜ Score</strong>로 변경합니다.</p>
+                <div class="highlight-box">
+                  💡 스코어링 휠 또는 스코어링 스타일러스 도구를 준비해주세요!
+                </div>
+              </div>
+
+              <div class="step-card">
+                <div class="step-num">4</div>
+                <h4>전체 선택 후 Attach (붙이기)</h4>
+                <p>전체 레이어를 마우스로 드래그하여 선택한 뒤, 우측 하단의 <strong>Attach</strong> 버튼을 반드시 눌러줍니다.</p>
+                <div class="highlight-box">
+                  ⚠️ Attach를 안 누르면 자르는 선과 접는 선이 매트에서 제각각 분리됩니다!
+                </div>
+              </div>
+
+              <div class="step-card">
+                <div class="step-num">5</div>
+                <h4>Make It & 조립 시작!</h4>
+                <p><strong>Make It</strong>을 누르고 카드스톡 재질(65lb~80lb Medium Cardstock 권장)을 선택하여 커팅을 진행합니다.</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- 4 PANELS DETAILS -->
-    <div class="panels-section">
-      <div class="section-title">
-        <span></span>
-        랜턴 4개 면 구성 안내 (양 끝 고정 + 중간 2면 자유 디자인)
-      </div>
-      <p style="color: var(--text-sub); font-size: 0.95rem;">
-        원하시는 대로 양 끝의 메인 디자인(Ellie & 오두막)은 그대로 두고, 중간 2면은 직접 크리컷/드로잉으로 꾸미실 수 있도록 빈 캔버스로 구성했습니다!
-      </p>
-
-      <div class="panels-grid">
-        <div class="story-card">
-          <div class="story-card-icon">👑✨</div>
-          <h4>1면: ✦ Ellie ✦ 메인 네임</h4>
-          <p>화려한 별빛 보태니컬 아치 창문과 중앙 'Ellie' 네임 각인 (안쪽 종이가 안 떨어지는 스텐실 브릿지 안심 설계)</p>
-          <span class="ellie-badge">유지: ✦ Ellie ✦</span>
-        </div>
-
-        <div class="story-card" style="border: 1px dashed var(--accent);">
-          <div class="story-card-icon">🔲✂️</div>
-          <h4>2면: 오픈 윈도우 박스 ①</h4>
-          <p>양 끝면과 정확히 동일한 크기(43×73mm)와 아치 형태의 윈도우 박스가 깔끔하게 컷아웃된 면입니다. 원하는 디자인을 채워 넣을 수 있습니다.</p>
-          <span class="ellie-badge" style="background: rgba(74, 222, 128, 0.15); color: #4ade80;">윈도우 박스 컷아웃</span>
-        </div>
-
-        <div class="story-card" style="border: 1px dashed var(--accent);">
-          <div class="story-card-icon">🔲🎨</div>
-          <h4>3면: 오픈 윈도우 박스 ②</h4>
-          <p>양 끝면과 정확히 동일한 크기와 아치 형태의 윈도우 박스가 깔끔하게 컷아웃된 면입니다. 반투명 트레이싱지를 대거나 실루엣을 배치해보세요.</p>
-          <span class="ellie-badge" style="background: rgba(74, 222, 128, 0.15); color: #4ade80;">윈도우 박스 컷아웃</span>
-        </div>
-
-        <div class="story-card">
-          <div class="story-card-icon">🏡🌲</div>
-          <h4>4면: 숲속 아늑한 오두막</h4>
-          <p>마음에 들어 하신 따뜻한 불빛의 4칸 창문과 문, 침엽수림 실루엣 디자인 그대로 유지되었습니다.</p>
-          <span class="ellie-badge">유지: ✦ Cozy Cabin ✦</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2D SVG CUTOUT PREVIEW -->
-    <div class="preview-section">
-      <div class="section-title">
-        <span></span>
-        실제 2D 커팅 도안 미리보기
-      </div>
-      
-      <div class="tab-bar">
-        <button class="tab-btn active" data-file="cricut_lantern_12x12_all_in_one.svg">⭐ 12x12 올인원 도안</button>
-        <button class="tab-btn" data-file="cricut_lantern_roof_and_base.svg">🏛️ 지붕 & 바닥판</button>
-        <button class="tab-btn" data-file="cricut_lantern_letter_part1.svg">📄 레터 분할 Part 1</button>
-        <button class="tab-btn" data-file="cricut_lantern_letter_part2.svg">📄 레터 분할 Part 2</button>
-        <button class="tab-btn" data-file="cricut_lantern_vellum_inserts.svg">📜 반투명 창문 패널</button>
-      </div>
-
-      <div class="svg-viewer-container" id="svgPreviewBox">
-        <img id="previewImg" src="cricut_lantern_12x12_all_in_one.svg" alt="SVG Preview" />
-      </div>
-    </div>
+      </div> <!-- end .lantern-tabs-container -->
 
   </div>
 
@@ -1193,7 +1294,7 @@
       const isLit = sceneContainer.classList.toggle('lit');
       if (isLit) {
         toggleLightBtn.classList.add('active');
-        toggleLightBtn.innerHTML = '💡 등불 켜기 (ON)';
+        toggleLightBtn.innerHTML = '💡 등불 (ON)';
       } else {
         toggleLightBtn.classList.remove('active');
         toggleLightBtn.innerHTML = '🌑 등불 끄기 (OFF)';
@@ -1201,26 +1302,90 @@
     });
 
     // Auto Rotate
+    function updateAutoRotateUI() {
+      if (autoRotate) {
+        autoRotateBtn.classList.add('active');
+        autoRotateBtn.innerHTML = '🔄 자동 회전 (ON)';
+      } else {
+        autoRotateBtn.classList.remove('active');
+        autoRotateBtn.innerHTML = '⏸️ 회전 멈춤 (OFF)';
+      }
+    }
+
     autoRotateBtn.addEventListener('click', () => {
       autoRotate = !autoRotate;
-      autoRotateBtn.classList.toggle('active', autoRotate);
+      updateAutoRotateUI();
       if (autoRotate) {
-        animateRotation();
-      } else {
+        startAutoRotate();
+      } else if (animFrame) {
         cancelAnimationFrame(animFrame);
+        animFrame = null;
       }
     });
 
-    function animateRotation() {
+    let lastTime = performance.now();
+    function animateRotation(now) {
+      if (!lastTime) lastTime = now;
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
       if (autoRotate && !isDragging) {
-        currentRotY += 0.4;
+        currentRotY = (currentRotY + dt * 25) % 360;
         updateLanternTransform();
       }
+      if (autoRotate) {
+        animFrame = requestAnimationFrame(animateRotation);
+      }
+    }
+
+    function startAutoRotate() {
+      if (animFrame) cancelAnimationFrame(animFrame);
+      lastTime = performance.now();
       animFrame = requestAnimationFrame(animateRotation);
     }
 
-    // Launch auto-rotation immediately on page load
-    animateRotation();
+    // Launch auto-rotation immediately
+    startAutoRotate();
+
+    // Listen for tab-activated message from parent portal or focus/visibility changes
+    window.addEventListener('message', (e) => {
+      if (e.data && (e.data.action === 'tab-activated' || e.data === 'tab-activated')) {
+        if (autoRotate) startAutoRotate();
+      }
+    });
+
+    window.addEventListener('focus', () => {
+      if (autoRotate) startAutoRotate();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && autoRotate) startAutoRotate();
+    });
+
+    // Heartbeat safety check to guarantee rotation on mobile WebKit/Blink
+    setInterval(() => {
+      if (autoRotate && (!animFrame || document.visibilityState === 'visible')) {
+        startAutoRotate();
+      }
+    }, 1500);
+
+    // Sub-tab switching for Lantern Content Panels (No endless scrolling)
+    const subTabs = document.querySelectorAll('.l-nav-tab');
+    const subPanels = document.querySelectorAll('.l-content-panel');
+
+    subTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetId = tab.getAttribute('data-target');
+        subTabs.forEach(t => t.classList.remove('active'));
+        subPanels.forEach(p => p.classList.remove('active'));
+
+        tab.classList.add('active');
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
+        }
+      });
+    });
 
     // Tab switching for 2D previews
     const tabs = document.querySelectorAll('.tab-btn');
@@ -1231,7 +1396,9 @@
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         const file = tab.getAttribute('data-file');
-        previewImg.src = file;
+        if (previewImg && file) {
+          previewImg.src = file;
+        }
       });
     });
   </script>

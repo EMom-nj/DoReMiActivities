@@ -43,6 +43,14 @@
 
   <!-- Top Navigation Tabs -->
   <nav class="nav-tabs-wrapper">
+    <div class="mobile-action-bar no-print">
+      <button onclick="window.print()" class="btn-m-action btn-m-print">
+        <span>🖨️</span> A4 8장 바로 인쇄
+      </button>
+      <button id="mobileAudioBtn" class="btn-m-action btn-m-audio" onclick="document.getElementById('audioToggleBtn').click()">
+        <span id="mobileAudioIcon">🌧️</span> <span id="mobileAudioText">빗소리</span>
+      </button>
+    </div>
     <div class="nav-tabs">
       <button class="tab-btn active" data-tab="tab-print">
         <span class="btn-text-full">📄 개편된 활동지 인쇄 (8P 풀세트)</span>
