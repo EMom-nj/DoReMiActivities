@@ -54,6 +54,14 @@
 
     <!-- 네비게이션 탭 (Scroll Down 시 Freeze 고정) -->
     <nav class="nav-tabs-wrapper">
+      <div class="mobile-action-bar no-print">
+        <button onclick="window.printAllSheets()" class="btn-m-action btn-m-print">
+          <span>🖨️</span> A4 15장 인쇄
+        </button>
+        <button id="mobileDominoAudioBtn" class="btn-m-action btn-m-audio" onclick="document.getElementById('dominoAudioBtn').click()">
+          <span id="mobileDominoAudioIcon">🎵</span> <span id="mobileDominoAudioText">효과음</span>
+        </button>
+      </div>
       <div class="nav-tabs">
         <button class="nav-tab active" data-tab="tab-print">
           <span class="tab-icon">🎨</span> <span class="tab-text-full">활동지 전개도 (15장)</span><span class="tab-text-short">전개도(15P)</span>

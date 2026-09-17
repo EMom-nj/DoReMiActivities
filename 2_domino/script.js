@@ -307,23 +307,34 @@ function playDominoCascadeSound() {
 
 function initDominoAudio() {
   const btn = document.getElementById('dominoAudioBtn');
-  if (!btn) return;
+  const mBtn = document.getElementById('mobileDominoAudioBtn');
   const icon = document.getElementById('dominoAudioIcon');
   const text = document.getElementById('dominoAudioText');
+  const mIcon = document.getElementById('mobileDominoAudioIcon');
+  const mText = document.getElementById('mobileDominoAudioText');
 
-  btn.addEventListener('click', () => {
-    bgConfig.audioEnabled = !bgConfig.audioEnabled;
-    if (bgConfig.audioEnabled) {
-      btn.classList.add('active');
-      icon.textContent = '🎶';
-      text.textContent = '효과음 켜짐';
-      playDominoCascadeSound();
-    } else {
-      btn.classList.remove('active');
-      icon.textContent = '🎵';
-      text.textContent = '효과음 켜기';
+  function updateAudioUI(enabled) {
+    if (btn) {
+      btn.classList.toggle('active', enabled);
+      if (icon) icon.textContent = enabled ? '🎶' : '🎵';
+      if (text) text.textContent = enabled ? '효과음 켜짐' : '효과음 켜기';
     }
-  });
+    if (mBtn) {
+      mBtn.classList.toggle('active', enabled);
+      if (mIcon) mIcon.textContent = enabled ? '🎶' : '🎵';
+      if (mText) mText.textContent = enabled ? '효과음 ON' : '효과음';
+    }
+  }
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      bgConfig.audioEnabled = !bgConfig.audioEnabled;
+      updateAudioUI(bgConfig.audioEnabled);
+      if (bgConfig.audioEnabled) {
+        playDominoCascadeSound();
+      }
+    });
+  }
 }
 
 function drawDominoBlock(ctx, d) {
