@@ -912,6 +912,194 @@ main.main-content {
 }
 
 /* =========================================================
+   MOBILE RESPONSIVE (Option tabs compact, 활동지 maximized!)
+   ========================================================= */
+.btn-text-short {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  header.app-header {
+    position: relative;
+    padding: 6px 10px;
+    box-shadow: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .brand-title {
+    font-size: 1.15rem;
+  }
+  .brand-badge, .brand-title span.author-tag, .rain-control-group {
+    display: none;
+  }
+  .header-actions {
+    gap: 6px;
+  }
+  .header-actions .btn {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+  }
+  .nav-tabs-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .nav-tabs {
+    padding: 4px 6px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+  }
+  .tab-btn {
+    padding: 6px 2px;
+    font-size: 0.74rem;
+    white-space: nowrap;
+    text-align: center;
+    justify-content: center;
+  }
+  .btn-text-full {
+    display: none;
+  }
+  .btn-text-short {
+    display: inline;
+  }
+  .hero-banner {
+    display: none; /* Frees up ~120px on mobile so 활동지 is seen immediately! */
+  }
+  .print-controls-bar {
+    padding: 6px 8px;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .print-presets,
+  .print-scale-selector,
+  .paper-size-notice {
+    display: none; /* Hide heavy options on mobile screen */
+  }
+  .btn-print-big {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+  }
+  .page-jump-selector {
+    overflow-x: auto;
+    width: 100%;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+  }
+  main.main-content {
+    padding: 8px 6px;
+    margin-top: 10px;
+  }
+  .a4-sheet {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    padding: 10px 8px !important;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .sheet-title-group h3 {
+    font-size: 0.95rem;
+  }
+  .sheet-title-group .subtext,
+  .sheet-meta-badge {
+    display: none;
+  }
+  .instruction-strip {
+    padding: 5px 8px;
+    font-size: 0.72rem;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 8px;
+  }
+  .paste-dual-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .paste-animal-card {
+    padding: 8px;
+    gap: 8px;
+  }
+  .paste-animal-visual img {
+    max-height: 120px;
+  }
+  .paste-cut-piece {
+    min-height: 110px;
+    padding: 6px;
+  }
+  .paste-cut-piece img.cut-piece-img {
+    max-height: 95px;
+  }
+  .cutout-pieces-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .cut-umbrella-card img {
+    max-height: 85px;
+  }
+  .cut-umbrella-card h4 {
+    font-size: 1.05rem;
+  }
+  .line-matching-sheet-layout {
+    gap: 6px;
+    padding: 4px;
+  }
+  .matching-col {
+    width: 95px;
+  }
+  .match-item-card-clean img {
+    max-height: 55px;
+  }
+  .silhouette-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .silhouette-visual-box {
+    height: 75px;
+  }
+  .silhouette-visual-box img {
+    max-height: 60px;
+  }
+  .path-tracing-container {
+    gap: 6px;
+  }
+  .trace-row {
+    padding: 4px 6px;
+    gap: 6px;
+    grid-template-columns: 45px 1fr 45px;
+  }
+  .trace-start img, .trace-end img {
+    height: 32px;
+  }
+  .creative-drawing-layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .drawing-canvas-board {
+    min-height: 200px;
+  }
+  .coloring-sheet-container {
+    min-height: 220px;
+  }
+  .coloring-sheet-container img {
+    max-height: 200px;
+  }
+  .sheet-footer {
+    font-size: 0.65rem;
+  }
+  .game-layout {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+/* =========================================================
    PRINT STYLES
    ========================================================= */
 @media print {
